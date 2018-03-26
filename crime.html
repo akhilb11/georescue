@@ -73,7 +73,7 @@
             <div class="row">
                 <div class="col-lg-12">
                 <!-- Instructions button -->
-                <h2>Heat Map &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary" style="margin-bottom:10px" data-toggle="modal" data-target="#myModal"><span class="fa fa-info-circle"></span> &nbsp;&nbsp;Help</button></h2>
+                <h2>Crime Correlation &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary" style="margin-bottom:10px" data-toggle="modal" data-target="#myModal"><span class="fa fa-info-circle"></span> &nbsp;&nbsp;Help</button></h2>
 
                 <!-- This is the help modal dialog box -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -85,10 +85,10 @@
                       </div>
                       <div class="modal-body">
                         <ul class="lead" style="font-size: 1.3em;">
-                        <li>Below, you can see the map of San Francisco.</li>
-                        <li>To turn on the heatmap, click "Show Heatmap".</li>
-                        <li>To change the data displayed, click the dispatch type buttons and the map will reload.</li>
-                        <li>Once selecting a dispatch type, you will have to click "Show Heatmap" again in order to display the newly loaded heatmap layer</li>
+                        <li>Below, you can see a graph that displays the frequency of dispatch calls in various zip codes based on dispatch type.</li>
+                        <li>To change the data displayed, click the dispatch type buttons.</li>
+                        <li>The graph may drastically change at times; however, every value is displayed on the graph.</li>
+                        <li>As seen in the graph, you can tell which areas are safer than others.</li>
                         <ul>
                       </div>
                       <div class="modal-footer">
@@ -114,39 +114,39 @@
                                   <!-- Labels set radio buttons to be under the legend (line them up) -->
                                   <!-- Onclick, the buttons call the creatMap fuction which creates a new map and sends the dispatch type info to python file -->
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Medical Incident"> Medical Incident</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Medical Incident" checked="checked"> Medical Incident</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Alarms"> Alarms</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Alarms"> Alarms</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Structure Fire"> Structure Fire</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Structure Fire"> Structure Fire</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Traffic Collision"> Traffic Collision</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Traffic Collision"> Traffic Collision</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Other"> Other</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Other"> Other</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Gas Leak (Natural and LP Gases)"> Gas Leak (Natural and LP Gases)</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Gas Leak (Natural and LP Gases)"> Gas Leak (Natural and LP Gases)</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Outside Fire"> Outside Fire</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Outside Fire"> Outside Fire</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Electrical Hazard"> Electrical Hazard</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Electrical Hazard"> Electrical Hazard</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Vehicle Fire"> Vehicle Fire</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Vehicle Fire"> Vehicle Fire</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Citizen Assist / Service Call"> Citizen Assist / Service Call</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Citizen Assist / Service Call"> Citizen Assist / Service Call</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Fuel Spill"> Fuel Spill</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Fuel Spill"> Fuel Spill</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Smoke Investigation (Outside)"> Smoke Investigation (Outside)</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Smoke Investigation (Outside)"> Smoke Investigation (Outside)</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Elevator / Escalator Rescue"> Elevator / Escalator Rescue</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Elevator / Escalator Rescue"> Elevator / Escalator Rescue</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Odor (Strange / Unknown)"> Odor (Strange / Unknown)</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Odor (Strange / Unknown)"> Odor (Strange / Unknown)</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Water Rescue"> Water Rescue</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Water Rescue"> Water Rescue</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="Train / Rail Incident"> Train / Rail Incident</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="Train / Rail Incident"> Train / Rail Incident</label>
                                     <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input name="optionType" type="radio" onclick="createMap()" value="HazMat"> HazMat</label>
+                                        <input name="optionType" type="radio" onclick="drawCrimeGraph()" value="HazMat"> HazMat</label>
                                 </div>
                             </div>
 
@@ -156,12 +156,7 @@
 
                 <!-- Map place holder for JavaScript and Heatmap Button-->
                 <div class="col-lg-9" style="margin-top:10px;">
-                  <div id="map-canvas">
-                    <h2>Loading ...</h2>
-                  </div>
-                  <div>
-                    <button onclick="showHeatmap()" class="btn btn-primary" style="margin-top:10px">Show Heatmap</button>
-                  </div>
+                  <div id=crimechart></div>
                 </div>
 
             </div>
@@ -169,51 +164,41 @@
 
     </div>
 
+    <!-- All the needed JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Scrpit that loads the google charts javascript file -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
-      // Global Variables
-      var map, heatmap;
-      // CreateMap function creates initial map and then calls getPoints() to get the data for the selected dispatch type
-      function createMap() {
-        map = new google.maps.Map(document.getElementById('map-canvas'), {
-          zoom: 12,
-          center: {lat: 37.775, lng: -122.434},
-          mapTypeId: 'roadmap'
-        });
-
-        heatmap = new google.maps.visualization.HeatmapLayer({
-          data: getPoints(),
-          map: map
+      // Downloading all the packages so that any graph needed can be created
+      google.charts.load('current', {packages: ['corechart']});
+      // Setting which creation methods to call on page load
+      google.charts.setOnLoadCallback(drawCrimeGraph);
+      // Function to draw the total average time to arrive on scene graph
+      function drawCrimeGraph() {
+        // Get method to retrieve data from python method
+        $.post("/crime", {dispatch: $('input[name=optionType]:checked').val()}, function(result){
+            // Parsing the json send back from the python method
+            var dt = $.parseJSON(result);
+            dt.unshift(['Zip Codes', 'Call Frequency']);
+            // Setting the column headers at the top so that google charts can read it in properly
+            data = google.visualization.arrayToDataTable(dt, false)
+            var options = {
+              title: 'Zip Code Areas (Neighborhoods) vs. Call Frequency Based on Dispatch Type',
+              height: '600',
+              chartArea: {width: '60%'},
+              hAxis: {
+                title: 'Call Frequency',
+                minValue: 0
+              },
+              vAxis: {
+                title: 'Zip Codes'
+              }
+            };
+            // Create bar chart
+            var chart = new google.visualization.BarChart(document.getElementById('crimechart'));
+            chart.draw(data, options);
         });
       }
-
-      // Using post request to send the name of the slected button over to python and call the function that is routed to "/map"
-      function getPoints() {
-        // Creating empty array to push values to
-        var data = [];
-        $.post("/map", {dispatch: $('input[name=optionType]:checked').val()}, function(result){
-          // post request gets "result" which is a json string of all the values (latitude and longitude)
-            var responseObject = result.replace("[[", "");
-            var pointArray = responseObject.split("],[");
-            // For loop to push new element to array
-            for ( i = 0; i< pointArray.length; i++) {
-              var a = parseFloat(pointArray[i])
-              var b = parseFloat(pointArray[i].replace(/^(.*?)\,/,''))
-              data.push(new google.maps.LatLng(a,b))
-            }
-        });
-        // Returns array which is then used to generate the data for the heatmap layer
-        return data
-      }
-
-      // Toggle for showing the heatmap
-      function showHeatmap() {
-        heatmap.setMap(heatmap.getMap() ? map : null);
-      }
-    </script>
-    <!-- Script to call createMap on page load -->
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAB8KkMobP1kxk7Kk4DDao6v2Bf4ozpZCQ&libraries=visualization&callback=createMap">
     </script>
     <!-- jQuery Library and Bootstrap Framework -->
     <script src="static/bootstrap.min.js"></script>
