@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Metadata for the webpage -->
+    <meta charset="utf-8">
+    <title>GeoRescue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link media="screen" rel="stylesheet" href="static/bootstrap.css" />
+    <link rel="stylesheet" href="static/bootswatch.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- Logo for the page -->
+        <a class="navbar-brand" href="index.html" style="padding-top:13px;"><img height="24px" src="static/logo.png"></a>
+        <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+          <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="./index.html"><i class="fa fa-home"></i> &nbsp; Main</a>
+          </li>
+          <li>
+            <a href="./heatmap.html"><span class="fa fa-globe"></span> &nbsp; Map</a>
+          </li>
+          <li>
+            <a href="./stats.html"><span class="fa fa-bar-chart"></span> &nbsp; Statistics</a>
+          </li>
+          <li>
+            <a href="./search.html"><i class="fa fa-search"></i> &nbsp; Search and Predict</a>
+          </li>
+          <li>
+            <a href="./about.html"><i class="fa fa-users"></i> &nbsp; About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Container for the information -->
+    <div class="container">
+        <div class="page-header" id="banner" style="margin-top:10px;">
+            <div class="row">
+                <div class="col-lg-12">
+                  <!-- Page Header -->
+                  <h2>Dispatch Statistics &nbsp;&nbsp;&nbsp;</h2>
+                  <br></br>
+                </div>
+                <div>
+                    <!-- Chart headers and Div Placeholders -->
+                    <form>
+                        <legend style="margin-top:10px;">&nbsp;&nbsp;&nbsp;&nbsp;Call Type vs. Amount of Calls Recieved</legend>
+                        <div id=barchart></div>
+                        <legend style="margin-top:10px;">&nbsp;&nbsp;&nbsp;&nbsp;Call Type vs. Average Total Time to Arrive On Scene (Minutes)</legend>
+                        <div id=avgchart></div>
+                        <legend style="margin-top:10px;">&nbsp;&nbsp;&nbsp;&nbsp;Call Type vs. Amount of Unique Boxes</legend>
+                        <div id=boxchart></div>
+                        <legend style="margin-top:10px;">&nbsp;&nbsp;&nbsp;&nbsp;Which areas have the longest dispatch time? How can this be fixed?</legend>
+                        <div id=zipchart></div>
+                        <h4 align="center">As seen above, the 94127 zip code area takes the longest time to dispatch to on average.
+                          Additionally, the 94158, 94132, 94103, and 94105 areas have an average dispatch time that is lower yet still significant as it is marginally larger than other zip code areas.
+                          In order to reduce these dispatch times, the city can either take some boxes from areas that have significantly lower average dispatch times (like 94102) and put them in these areas that have greater risk or they can make more boxes for these areas.
+                          For example, the zip code area of 94110 has 102 different boxes and a majority of those could be moved towards 94127 and help bring down the dispatch time.
+                          Furthermore, the city could make more unique station areas and put them in each zip code area so that they can soley respond to calls in their area.
+                        </h4>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- All the needed JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Scrpit that loads the google charts javascript file -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+      // Downloading all the packages so that any graph needed can be created
+      google.charts.load('current', {packages: ['corechart']});
+      // Setting which creation methods to call on page load
+      google.charts.setOnLoadCallback(drawBarGraph);
+      google.charts.setOnLoadCallback(drawAvgGraph);
+      google.charts.setOnLoadCallback(drawBoxGraph);
+      google.charts.setOnLoadCallback(drawZipGraph);
+      // Function to draw the bar graph
+      function drawBarGraph() {
+        // Get method to retrieve data from python method
+        $.get("/barData", function(result){
+            // Parsing the json send back from the python method
+            var dt = $.parseJSON(result);
+            // Setting the column headers at the top so that google charts can read it in properly
+            dt.unshift(['Call Type', 'Total Amount of Calls']);
+
+            data = google.visualization.arrayToDataTable(dt, false)
+            var options = {
+              title: '',
+              height: '500',
+              chartArea: {width: '50%'},
+              hAxis: {
+                title: 'Total Amount of Calls',
+                minValue: 0
+              },
+              vAxis: {
+                title: 'Call Type'
+              }
+            };
+            // Create bar chart
+            var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+            chart.draw(data, options);
+        });
+      }
+      // Function to draw the total average time to arrive on scene graph
+      function drawAvgGraph() {
+        // Get method to retrieve data from python method
+        $.get("/avgData", function(result){
+            // Parsing the json send back from the python method
+            var dt = $.parseJSON(result);
+            dt.unshift(['Call Type', 'Average Total Time to Arrive On Scene (min)']);
+            // Setting the column headers at the top so that google charts can read it in properly
+            data = google.visualization.arrayToDataTable(dt, false)
+            var options = {
+              title: '',
+              height: '500',
+              chartArea: {width: '50%'},
+              hAxis: {
+                title: 'Average Total Time to Arrive On Scene (min)',
+                minValue: 0
+              },
+              vAxis: {
+                title: 'Call Type'
+              }
+            };
+            // Create bar chart
+            var chart = new google.visualization.BarChart(document.getElementById('avgchart'));
+            chart.draw(data, options);
+        });
+      }
+      // Function to draw the btotal unique boxes ar graph
+      function drawBoxGraph() {
+        // Get method to retrieve data from python method
+        $.get("/boxData", function(result){
+            // Parsing the json send back from the python method
+            var dt = $.parseJSON(result);
+            dt.unshift(['Call Type', 'Total Amount of Unique Boxes']);
+            // Setting the column headers at the top so that google charts can read it in properly
+            data = google.visualization.arrayToDataTable(dt, false)
+            var options = {
+              title: '',
+              height: '500',
+              chartArea: {width: '50%'},
+              hAxis: {
+                title: 'Total Amount of Boxes',
+                minValue: 0
+              },
+              vAxis: {
+                title: 'Call Type'
+              }
+            };
+            // Create bar chart
+            var chart = new google.visualization.BarChart(document.getElementById('boxchart'));
+            chart.draw(data, options);
+        });
+      }
+      // Function to draw the zip code area graph
+      function drawZipGraph() {
+        // Get method to retrieve data from python method
+        $.get("/zipData", function(result){
+            // Parsing the json send back from the python method
+            var dt = $.parseJSON(result);
+            dt.unshift(['Zip Codes', 'Total Amount of Unique Boxes', 'Total Amount of Unique Station Areas', 'Average Total Time to Arrive On Scene (min)']);
+            // Setting the column headers at the top so that google charts can read it in properly
+            data = google.visualization.arrayToDataTable(dt, false)
+            var options = {
+              title : 'Zipcode Area vs. Average Time to Get On Scene, Amount of Boxes, Amount of Station Areas',
+              height: '500',
+              chartArea: {width: '60%'},
+              vAxis: {title: 'Totals'},
+              hAxis: {title: 'Zip Codes'},
+              seriesType: 'bars',
+              series: {5: {type: 'line'}}
+            };
+            // Create combo chart
+            var chart = new google.visualization.ComboChart(document.getElementById('zipchart'));
+            chart.draw(data, options);
+        });
+      }
+    </script>
+    <!-- jQuery Library and Bootstrap Framework -->
+    <script src="static/bootstrap.min.js"></script>
+
+
+</body>
+</html>

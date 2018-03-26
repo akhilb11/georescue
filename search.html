@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!--Title of Page-->
+    <title>
+      GeoRescue
+    </title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!--Bootstrap Theme-->
+    <link media="screen" rel="stylesheet" href="static/bootstrap.css" />
+    <link rel="stylesheet" href="static/bootswatch.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <!--[if lt IE 9]>
+          <script src="static/ie/html5shiv.js"></script>
+          <script src="static/ie/respond.min.js"></script>
+        <![endif]-->
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- Logo for the page -->
+          <a class="navbar-brand" href="index.html" style="padding-top:13px;"><img height="24px" src="static/logo.png"></a>
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="./index.html"><i class="fa fa-home"></i> &nbsp; Main</a>
+            </li>
+            <li>
+              <a href="./heatmap.html"><span class="fa fa-globe"></span> &nbsp; Map</a>
+            </li>
+            <li>
+              <a href="./stats.html"><span class="fa fa-bar-chart"></span> &nbsp; Statistics</a>
+            </li>
+            <li>
+              <a href="./search.html"><i class="fa fa-search"></i> &nbsp; Search and Predict</a>
+            </li>
+            <li>
+              <a href="./about.html"><i class="fa fa-users"></i> &nbsp; About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+   <!-- Search Bar -->
+    <div class="container">
+      <div style="margin-top:30px;">
+        <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+            <div class="panel panel-default">
+              <div class="panel-body" style="margin-bottom:-5px;">
+                  <h2 class="lead text-center">
+                    Search: &nbsp;&nbsp;&nbsp;
+                    <div style="display: inline" class="form-inline my-2 my-lg-0">
+                      <!-- Searchbar submit button calls "submit()" onclick so that the information within the input can be sent to the python file -->
+                      <input style="display: inline;" class="form-control mr-sm-2" placeholder="700 O'Farrell St, 00:19:30" style="margin-top:5px;" id="i1" type="text" name="user">
+                      <button class="btn btn-secondary my-2 my-sm-0" style="background-color: #277FE3; color: #FFFF; display: inline;" onclick="submit()">Search</button>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="display: inline;">
+                      <span class="fa fa-info-circle"></span> &nbsp;&nbsp;Help
+                    </button>
+                  </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- This is the help modal dialog box for the search bar-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><strong>Help</strong></h4>
+              </div>
+              <div class="modal-body">
+                <ul class="lead" style="font-size: 1.3em;">
+                <li>Below, is a search bar for you to enter your address and time alongside a search button.</li>
+                <li>To look up a value, enter the address followed by the time (military) separated with a comma.</li>
+                <li>The predicted dispatch will then show up below the search bar.</li>
+                <li>Example input: "700 O'Farrell St, 00:19:30"</li>
+                <ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+     <!-- Results from search -->
+     <div class="container">
+       <div style="margin-top:20px;">
+         <div class="row">
+           <div class="col-sm-10 col-sm-offset-1">
+             <div class="panel panel-default">
+               <div class="panel-body" style="margin-bottom:-5px;">
+                 <h2 class="lead text-center">
+                   <!-- div is sent the results from javascript -->
+                   <div id="div1"></div>
+                 </h2>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+     <script>
+     // submit() function uses a post request to send the value within the input box to the python function routed to "/api" and recieves the dispatch type string in return
+     function submit() {
+         $.post("/api", {i1: $("#i1").val()}, function(result){
+              // setting contents within div1 to be equivalent to the result string
+             $("#div1").html(result);
+         });
+     }
+     </script>
+
+      <!-- Bootstrap Framework -->
+      <script src="static/bootstrap.min.js"></script>
+
+  </body>
+</html>
