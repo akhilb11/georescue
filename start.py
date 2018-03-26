@@ -107,6 +107,9 @@ def returnBoxData():
     boxCount = boxCount.groupby(['call_type']).size().reset_index(name='count')
     finalboxCount = boxCount[['call_type', 'count']]
     # Converting the dataframe to json and sending it back to javascript
+    # finalboxCount.to_csv("boxData.csv", sep=',')
+    # Included the line above in comments because pythonanywhere for somereason did not let this method run, kept getting errors on pandas that didnt show up locally
+    # As a solution, I decided to just make a csv and upload that to the live demo, having said that the data was still calculated using this very method
     response = finalboxCount.to_json(orient='values')
     return response
 
@@ -136,6 +139,9 @@ def returnZipData():
     finalDF = finalboxCount.merge(finalstationCount,on='zipcode_of_incident').merge(finalTimeValues,on='zipcode_of_incident')
     finalDF['zipcode_of_incident'] = finalDF['zipcode_of_incident'].astype(str)
     # Converting the dataframe to json and sending it back to javascript
+    # finalDF.to_csv("zipData.csv", sep=',')
+    # Included the line above in comments because pythonanywhere for somereason did not let this method run, kept getting errors on pandas that didnt show up locally
+    # As a solution, I decided to just make a csv and upload that to the live demo, having said that the data was still calculated using this very method
     response = finalDF.to_json(orient='values')
     return response
 
