@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!--Title of Page-->
+    <title>
+      GeoRescue
+    </title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!--Bootstrap Theme-->
+    <link media="screen" rel="stylesheet" href="static/bootstrap.css" />
+    <link rel="stylesheet" href="static/bootswatch.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
+    <!--[if lt IE 9]>
+          <script src="static/ie/html5shiv.js"></script>
+          <script src="static/ie/respond.min.js"></script>
+        <![endif]-->
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <!-- Logo for the page -->
+          <a class="navbar-brand" href="index.html" style="padding-top:13px;"><img height="24px" src="static/logo.png"></a>
+          <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+            <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="./index.html"><i class="fa fa-home"></i> &nbsp; Main</a>
+            </li>
+            <li>
+              <a href="./heatmap.html"><span class="fa fa-globe"></span> &nbsp; Map</a>
+            </li>
+            <li>
+              <a href="./stats.html"><span class="fa fa-bar-chart"></span> &nbsp; Statistics</a>
+            </li>
+            <li>
+              <a href="./search.html"><i class="fa fa-search"></i> &nbsp; Search and Predict</a>
+            </li>
+            <li>
+              <a href="./about.html"><i class="fa fa-users"></i> &nbsp; About</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+   <!-- Instructions -->
+    <div class="container">
+      <div class="page-header" id="banner" style="margin-top:30px;">
+        <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+            <div class="panel panel-default">
+              <div class="panel-body" style="margin-bottom:-10px;">
+                <p class="lead text-center" style="font-size: 1.5em">
+                  <!-- the colors are manipulated using span tags -->
+                  Welcome to <span style="color: #FECC3C; font-family: 'Roboto';">Geo</span><span style="color: #277FE3; font-family: 'Roboto';">Rescue</span>! Here, you may view the dispatch statistics based on SFPD data, view a heatmap that displays the urgency of dispatch calls throughout the city, search an address and see what its predicted dispatch type is, and view the about page to learn more about GeoRescue.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+     <!-- Main links -->
+        <div class="row">
+          <div class="col-sm-5 col-sm-offset-1">
+            <div class="panel panel-default" id="pan1a" style="cursor: pointer;">
+              <div class="panel-body" style="margin-bottom:-13px;">
+                <span class="text-primary"></span>
+                <p class="lead text-center" style="font-size: 10em; margin-bottom:-20px;">
+                  <span class="text-primary"><span class="fa fa-globe"></span></span>
+                </p>
+                <p class="lead text-center" style="font-size: 2em">
+                  San Francisco Map
+                </p>
+              </div>
+            </div>
+            <div class="panel panel-default" id="pan1b" style="cursor: pointer;">
+              <div class="panel-body" style="margin-bottom:-13px;">
+                <span class="text-primary"></span>
+                <p class="lead text-center" style="font-size: 10em; margin-bottom:-20px;">
+                  <span class="text-primary" style="color: #FECC3C;"><span class="fa fa-search"></span></span>
+                </p>
+                <p class="lead text-center" style="font-size: 2em">
+                  Search and Predict
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="panel panel-default" id="pan2a" style="cursor: pointer;">
+              <div class="panel-body" style="margin-bottom:-13px;">
+                <span class="text-success"></span>
+                <p class="lead text-center" style="font-size: 10em; margin-bottom:-20px;">
+                  <span class="text-success" style="color: #FECC3C;"><span class="fa fa-bar-chart"></span></span>
+                </p>
+                <p class="lead text-center" style="font-size: 2em">
+                  Dispatch Statistics
+                </p>
+              </div>
+            </div>
+            <div class="panel panel-default" id="pan2b" style="cursor: pointer;">
+              <div class="panel-body" style="margin-bottom:-13px;">
+                <span class="text-success"></span>
+                <p class="lead text-center" style="font-size: 10em; margin-bottom:-20px;">
+                  <span class="text-primary"><span class="fa fa-users"></span></span>
+                </p>
+                <p class="lead text-center" style="font-size: 2em">
+                  About
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Javascript -->
+      <script src="static/jquery_2-1-3.min.js"></script>
+      <!-- jQuery library and Bootstrap framework -->
+      <script src="static/bootstrap.min.js"></script>
+      <script>
+      	  // DOM event handler for on-click for the first link panel
+          $('#pan1a').click(function(e) {
+            e.preventDefault();
+            window.location = './heatmap.html';
+          });
+
+          // DOM event handler for on-click for the first link panel
+          $('#pan1b').click(function(e) {
+            e.preventDefault();
+            window.location = './search.html';
+          });
+
+          // DOM event handler for on-click for the first link panel
+          $('#pan2a').click(function(e) {
+            e.preventDefault();
+            window.location = './stats.html';
+          });
+
+          // DOM event handler for on-click for the second link panel
+          $('#pan2b').click(function(e) {
+            e.preventDefault();
+            window.location = './about.html';
+          });
+      </script>
+
+  </body>
+</html>

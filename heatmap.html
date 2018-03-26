@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<!-- Metadata for the webpage -->
+    <meta charset="utf-8">
+    <title>GeoRescue</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link media="screen" rel="stylesheet" href="static/bootstrap.css" />
+    <link rel="stylesheet" href="static/bootswatch.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- In Line style  tags-->
+    <style>
+        /* Sets the map's size */
+        #map-canvas {
+          height:450px!important
+        }
+
+        /* Makes the tooltip font bigger */
+        .tooltip-inner {
+          font-size:1.2em;
+          max-width:300px!important
+        }
+    </style>
+
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- Logo for the page -->
+        <a class="navbar-brand" href="index.html" style="padding-top:13px;"><img height="24px" src="static/logo.png"></a>
+        <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse" type="button">
+          <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li>
+            <!-- Link to homepage -->
+            <a href="./index.html"><i class="fa fa-home"></i> &nbsp; Main</a>
+          </li>
+          <li>
+            <!-- Link to heatmap page -->
+            <a href="./heatmap.html"><span class="fa fa-globe"></span> &nbsp; Map</a>
+          </li>
+          <li>
+            <!-- Link to stats page -->
+            <a href="./stats.html"><span class="fa fa-bar-chart"></span> &nbsp; Statistics</a>
+          </li>
+          <li>
+            <!-- Link to search page -->
+            <a href="./search.html"><i class="fa fa-search"></i> &nbsp; Search and Predict</a>
+          </li>
+          <li>
+            <!-- Link to about page -->
+            <a href="./about.html"><i class="fa fa-users"></i> &nbsp; About</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container">
+        <!-- Top of page, header  with map and options underneath -->
+        <div class="page-header" id="banner" style="margin-top:10px;">
+            <div class="row">
+                <div class="col-lg-12">
+                <!-- Instructions button -->
+                <h2>Instructions: &nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary" style="margin-bottom:10px" data-toggle="modal" data-target="#myModal"><span class="fa fa-info-circle"></span> &nbsp;&nbsp;Help</button></h2>
+
+                <!-- This is the help modal dialog box -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel"><strong>Help</strong></h4>
+                      </div>
+                      <div class="modal-body">
+                        <ul class="lead" style="font-size: 1.3em;">
+                        <li>Below, you can see the map of San Francisco.</li>
+                        <li>To turn on the heatmap, click "Show Heatmap".</li>
+                        <li>To change the data displayed, click the dispatch type buttons and the map will reload.</li>
+                        <li>Once selecting a dispatch type, you will have to click "Show Heatmap" again in order to display the newly loaded heatmap layer</li>
+                        <ul>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                </div>
+
+                <!-- A small column to display options -->
+                <div class="col-lg-3">
+                    <!-- Legend header -->
+                    <form>
+                        <legend>Dispatch Type</legend>
+
+                        <!-- Dispatch types -->
+                        <div id="selector">
+                            <!-- Radios for selection -->
+                            <div class="collapse in">
+                                <div class="radio">
+                                  <!-- Labels set radio buttons to be under the legend (line them up) -->
+                                  <!-- Onclick, the buttons call the creatMap fuction which creates a new map and sends the dispatch type info to python file -->
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Medical Incident"> Medical Incident</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Alarms"> Alarms</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Structure Fire"> Structure Fire</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Traffic Collision"> Traffic Collision</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Other"> Other</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Gas Leak (Natural and LP Gases)"> Gas Leak (Natural and LP Gases)</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Outside Fire"> Outside Fire</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Electrical Hazard"> Electrical Hazard</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Vehicle Fire"> Vehicle Fire</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Citizen Assist / Service Call"> Citizen Assist / Service Call</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Fuel Spill"> Fuel Spill</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Smoke Investigation (Outside)"> Smoke Investigation (Outside)</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Elevator / Escalator Rescue"> Elevator / Escalator Rescue</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Odor (Strange / Unknown)"> Odor (Strange / Unknown)</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Water Rescue"> Water Rescue</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="Train / Rail Incident"> Train / Rail Incident</label>
+                                    <label class="radio" style="margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input name="optionType" type="radio" onclick="createMap()" value="HazMat"> HazMat</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Map place holder for JavaScript and Heatmap Button-->
+                <div class="col-lg-9" style="margin-top:10px;">
+                  <div id="map-canvas">
+                    <h2>Loading ...</h2>
+                  </div>
+                  <div>
+                    <button onclick="showHeatmap()" class="btn btn-primary" style="margin-top:10px">Show Heatmap</button>
+                  </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      // Global Variables
+      var map, heatmap;
+      // CreateMap function creates initial map and then calls getPoints() to get the data for the selected dispatch type
+      function createMap() {
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+          zoom: 12,
+          center: {lat: 37.775, lng: -122.434},
+          mapTypeId: 'roadmap'
+        });
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: getPoints(),
+          map: map
+        });
+      }
+
+      // Using post request to send the name of the slected button over to python and call the function that is routed to "/map"
+      function getPoints() {
+        // Creating empty array to push values to
+        var data = [];
+        $.post("/map", {dispatch: $('input[name=optionType]:checked').val()}, function(result){
+          // post request gets "result" which is a json string of all the values (latitude and longitude)
+            var responseObject = result.replace("[[", "");
+            var pointArray = responseObject.split("],[");
+            // For loop to push new element to array
+            for ( i = 0; i< pointArray.length; i++) {
+              var a = parseFloat(pointArray[i])
+              var b = parseFloat(pointArray[i].replace(/^(.*?)\,/,''))
+              data.push(new google.maps.LatLng(a,b))
+            }
+        });
+        // Returns array which is then used to generate the data for the heatmap layer
+        return data
+      }
+
+      // Toggle for showing the heatmap
+      function showHeatmap() {
+        heatmap.setMap(heatmap.getMap() ? map : null);
+      }
+    </script>
+    <!-- Script to call createMap on page load -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAB8KkMobP1kxk7Kk4DDao6v2Bf4ozpZCQ&libraries=visualization&callback=createMap">
+    </script>
+    <!-- jQuery Library and Bootstrap Framework -->
+    <script src="static/bootstrap.min.js"></script>
+
+
+</body>
+</html>
