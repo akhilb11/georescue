@@ -64,6 +64,21 @@ def returnCoordinates(dispatchType):
     return response
 
 # Returns the data required for the bar graph
+def returnCrimeData(dispatchType):
+    # reads in the CSV data and sets it to a new dataframe
+    df = pd.read_csv('./data/sfpd_dispatch_data_subset.csv', sep=',')
+    # Selecting which data is needed
+    x = df[['call_type', 'zipcode_of_incident']]
+    # Isolating the rows that are equivalent to the clicked dispatch type
+    y = df.loc[x['call_type'] == dispatchType]
+    # Grouping all the rows in the dataframe by zipcode_of_incident type and getting rid of the duplicates while also counting how many duplicates each unique value
+    dispatchCount = y.groupby(['zipcode_of_incident']).size().reset_index(name='count')
+    # Converting the dataframe to json and sending it back to javascript
+    dispatchCount = dispatchCount[['zipcode_of_incident', 'count']]
+    response = dispatchCount.to_json(orient='values')
+    return response
+
+# Returns the data required for the bar graph
 def returnBarData():
     # reads in the CSV data and sets it to a new dataframe
     df = pd.read_csv('./data/sfpd_dispatch_data_subset.csv', sep=',')
@@ -160,6 +175,11 @@ def index():
 def heatmap():
     with open("heatmap.html", "r") as f: return f.read()
 
+# Setting route for crime graph
+@app.route('/crime.html')
+def crimegraph():
+    with open("crime.html", "r") as f: return f.read()
+
 # Setting route for search page
 @app.route('/search.html')
 def search():
@@ -185,6 +205,12 @@ def api():
 @app.route('/map', methods=['GET', 'POST'])
 def map():
     result = returnCoordinates(request.form['dispatch'])
+    return result
+
+# Setting route for "/crime" in order to send post or get request to python method and retrieve crime graph data
+@app.route('/crime', methods=['GET', 'POST'])
+def crime():
+    result = returnCrimeData(request.form['dispatch'])
     return result
 
 # Setting route for "/barData" in order to send post or get request to python method and retrieve data for bar graph
